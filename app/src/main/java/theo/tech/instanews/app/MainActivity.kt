@@ -8,21 +8,30 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import theo.tech.instanews.R
+import theo.tech.instanews.app.Adapters.ViewPagerAdapter
+import theo.tech.instanews.app.Fragments.HomeFragment
+import theo.tech.instanews.app.Fragments.TechFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private var tabLayout:TabLayout?=null
+    var viewPager:ViewPager? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        viewPager=findViewById(R.id.viewpager) as ViewPager
+        setupViewPager(viewpager!!)
+        tabLayout=findViewById(R.id.tabs) as TabLayout
+        tabLayout!!.setupWithViewPager(viewpager)
+
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar,
@@ -33,6 +42,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+    }
+
+    private fun setupViewPager(viewpager: ViewPager) {
+        val adapter=ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(HomeFragment(),"Articles")
+        adapter.addFragment(TechFragment(),"Technology")
+        viewPager!!.adapter=adapter
     }
 
     override fun onBackPressed() {
