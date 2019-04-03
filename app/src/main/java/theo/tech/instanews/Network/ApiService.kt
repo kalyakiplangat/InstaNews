@@ -12,7 +12,9 @@ import theo.tech.instanews.Entinties.Responses.BaseResponse
  */
 interface ApiService {
     @GET("everything")
-    fun getAllArticles():Flowable<BaseResponse>
+    fun getAllArticles(
+        @Query("q")q:String
+    ):Observable<BaseResponse>
 
     @GET("")
     fun getSourceTechCategory(
