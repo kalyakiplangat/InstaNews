@@ -7,7 +7,7 @@ package theo.tech.instanews.Network
 class Urls {
     companion object {
         private val localUrl=""
-        private val liveUrl=""
+        private val liveUrl="https://newsapi.org/v2/"
         val Baseurl= liveUrl
     }
 }
