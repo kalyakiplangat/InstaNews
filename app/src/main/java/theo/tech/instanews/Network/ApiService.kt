@@ -4,7 +4,7 @@ import io.reactivex.Flowable
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
-import theo.tech.instanews.Entinties.Responses.BaseRespose
+import theo.tech.instanews.Entinties.Responses.BaseResponse
 
 /**
  * created by theop
@@ -12,10 +12,10 @@ import theo.tech.instanews.Entinties.Responses.BaseRespose
  */
 interface ApiService {
     @GET("everything")
-    fun getAllArticles():Flowable<BaseRespose>
+    fun getAllArticles():Flowable<BaseResponse>
 
     @GET("")
     fun getSourceTechCategory(
         @Query("category")category:String
-    ):Observable<BaseRespose>
+    ):Observable<BaseResponse>
 }
