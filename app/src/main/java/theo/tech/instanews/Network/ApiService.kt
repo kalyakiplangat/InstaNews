@@ -17,6 +17,12 @@ interface ApiService {
         @Query("q")q:String
     ):Observable<BaseResponse>
 
+    @GET("everything")
+    fun getArticlesInCategory(
+        @Query("domains")domains:String,
+        @Query("q")q: String
+    ):Observable<BaseResponse>
+
     @GET("sources")
     fun getSourceTechCategory(
         @Query("category")category:String

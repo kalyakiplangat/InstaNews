@@ -1,5 +1,6 @@
 package theo.tech.instanews.app.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,8 @@ import theo.tech.instanews.Network.ApiClient
 import theo.tech.instanews.R
 import theo.tech.instanews.app.Adapters.AllArticlesAdapter
 import theo.tech.instanews.app.Adapters.SourcesAdapter
+import theo.tech.instanews.app.AppControllers
+import java.io.Serializable
 
 /**
  * created by theop
@@ -68,7 +71,9 @@ class TechFragment:Fragment(),SourcesAdapter.Listener {
     }
 
     override fun onSourceClick(category: Category) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+       val intent=Intent(AppControllers.instance,ArticlesInCategory::class.java)
+        intent.putExtra("extra_source",category as Serializable)
+        startActivity(intent)
     }
 
 }
