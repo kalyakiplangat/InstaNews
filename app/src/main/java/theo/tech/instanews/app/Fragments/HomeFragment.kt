@@ -2,10 +2,9 @@ package theo.tech.instanews.app.Fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +17,7 @@ import theo.tech.instanews.Network.ApiClient
 import theo.tech.instanews.R
 import theo.tech.instanews.app.Adapters.AllArticlesAdapter
 import theo.tech.instanews.app.AppControllers
+import theo.tech.instanews.app.MainActivity
 import theo.tech.instanews.app.Views.NewsDetails
 import java.io.Serializable
 
@@ -39,6 +39,7 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
         compositeDisposable= CompositeDisposable()
         rv_content_list=rootView.findViewById(R.id.rv_content_list)
         initViews()
+        setHasOptionsMenu(true)
         fetchArticles()
         return rootView
     }
@@ -85,5 +86,29 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
 
     override fun onLikeClick(article: Article) {
         Toast.makeText(context, "not Implemented", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        menu.clear()
+        inflater.inflate(R.menu.main,menu)
+        val searchView = SearchView((context as MainActivity).supportActionBar?.themedContext ?: context)
+        menu.findItem(R.id.action_search).apply {
+            setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            actionView = searchView
+        }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                //TODO: not implemented
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+              //TODO: not implemented
+                return false
+            }
+        })
     }
 }
