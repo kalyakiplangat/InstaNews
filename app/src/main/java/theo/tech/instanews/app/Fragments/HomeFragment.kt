@@ -1,6 +1,7 @@
 package theo.tech.instanews.app.Fragments
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.ProgressBar
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -26,7 +28,7 @@ import java.io.Serializable
  * created by theop
  * on 4/3/2019 at 10:22 PM
  */
-class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
+class HomeFragment:Fragment(),AllArticlesAdapter.Listener,SwipeRefreshLayout.OnRefreshListener {
 
     val client by lazy {
         ApiClient.create()
@@ -36,16 +38,27 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
     lateinit var compositeDisposable: CompositeDisposable
     private lateinit var articleList:ArrayList<Article>
     private var articleAdapter:AllArticlesAdapter?=null
+    private lateinit var swipe_refresh_layout:SwipeRefreshLayout
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView:View=inflater.inflate(R.layout.content_main,container,false)
         compositeDisposable= CompositeDisposable()
         rv_content_list=rootView.findViewById(R.id.rv_content_list)
         progressBar = rootView.findViewById(R.id.progressBar)
+        swipe_refresh_layout=rootView.findViewById(R.id.swipe_refresh_layout)
         initViews()
         setHasOptionsMenu(true)
+        swipeToRefresh()
         fetchArticles()
         return rootView
     }
+    override fun onRefresh() {
+        fetchArticles()
+    }
+    private fun swipeToRefresh() {
+        swipe_refresh_layout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW)
+        swipe_refresh_layout.setOnRefreshListener(this)
+    }
+
 
     private fun fetchArticles() {
         progressBar?.setVisibility(View.VISIBLE)
@@ -59,6 +72,7 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
     }
 
     private fun handleResponse(articles: List<Article>) {
+        swipe_refresh_layout.isRefreshing=false
         progressBar?.setVisibility(View.GONE)
         articleList= ArrayList(articles)
         articleAdapter=AllArticlesAdapter(this.context!!,articleList,this)
@@ -66,9 +80,11 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
     }
 
     private fun handleError(e:Throwable){
+        swipe_refresh_layout.isRefreshing=false
         progressBar?.setVisibility(View.GONE)
         e.printStackTrace()
     }
+
 
     private fun initViews() {
         rv_content_list.setHasFixedSize(true)

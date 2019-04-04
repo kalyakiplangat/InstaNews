@@ -1,6 +1,7 @@
 package theo.tech.instanews.app.Fragments
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +26,7 @@ import java.io.Serializable
  * created by theop
  * on 4/3/2019 at 10:22 PM
  */
-class TechFragment:Fragment(),SourcesAdapter.Listener {
+class TechFragment:Fragment(),SourcesAdapter.Listener, SwipeRefreshLayout.OnRefreshListener {
 
     val client by lazy {
         ApiClient.create()
@@ -34,15 +36,26 @@ class TechFragment:Fragment(),SourcesAdapter.Listener {
     lateinit var compositeDisposable: CompositeDisposable
     private lateinit var sourcesLists:ArrayList<Category>
     private var sourcesAdapter: SourcesAdapter?=null
+    private lateinit var swipe_refresh_layout:SwipeRefreshLayout
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
        val rootView:View=inflater.inflate(R.layout.tech_main_layout,container,false)
        compositeDisposable= CompositeDisposable()
         rv_content_list=rootView.findViewById(R.id.rv_content_list)
         progressBar = rootView.findViewById(R.id.progressBar)
+        swipe_refresh_layout=rootView.findViewById(R.id.swipe_refresh_layout)
+        swipeToRefresh()
         initViews()
         fetchSources()
 
         return rootView
+    }
+
+    override fun onRefresh() {
+      fetchSources()
+    }
+    private fun swipeToRefresh() {
+        swipe_refresh_layout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW)
+        swipe_refresh_layout.setOnRefreshListener(this)
     }
 
     private fun initViews() {
@@ -65,12 +78,14 @@ class TechFragment:Fragment(),SourcesAdapter.Listener {
 
     private fun handleResponce(sources: List<Category>) {
         progressBar?.setVisibility(View.GONE)
+        swipe_refresh_layout.isRefreshing=false
         sourcesLists= ArrayList(sources)
         sourcesAdapter= SourcesAdapter(this.context!!,sourcesLists,this)
         rv_content_list.adapter=sourcesAdapter
     }
 
     private fun handleError(e:Throwable){
+        swipe_refresh_layout.isRefreshing=false
         progressBar?.setVisibility(View.GONE)
         e.printStackTrace()
     }
