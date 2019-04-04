@@ -72,11 +72,11 @@ class TechFragment:Fragment(),SourcesAdapter.Listener, SwipeRefreshLayout.OnRefr
     )
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
-        .subscribe({category->handleResponce(category.sources)},
+        .subscribe({category->handleResponse(category.sources)},
             this::handleError))
     }
 
-    private fun handleResponce(sources: List<Category>) {
+    private fun handleResponse(sources: List<Category>) {
         progressBar?.setVisibility(View.GONE)
         swipe_refresh_layout.isRefreshing=false
         sourcesLists= ArrayList(sources)
