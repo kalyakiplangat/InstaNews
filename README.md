@@ -1,6 +1,6 @@
 # InstaNews
 
-Working with News Api(Kotline) from newsapi.org
+Working with News Api(Kotlin) from newsapi.org
 
 screenshots:
 
