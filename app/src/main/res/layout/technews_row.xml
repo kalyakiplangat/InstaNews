@@ -95,6 +95,7 @@
                 android:layout_below="@+id/tv_category"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="@dimen/md_keylines"
+                android:visibility="gone"
                 android:layout_marginRight="@dimen/md_keylines"
                 android:layout_marginTop="5dp"
                 android:text="Category"
@@ -105,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:id="@+id/dvider"
-                android:layout_below="@+id/tv_ta"
+                android:layout_below="@+id/tv_categ"
                 android:layout_marginTop="5dp"
                 android:background="@color/colorDivider" />
 

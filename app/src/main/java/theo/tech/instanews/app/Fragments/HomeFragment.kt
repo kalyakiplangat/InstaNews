@@ -1,5 +1,6 @@
 package theo.tech.instanews.app.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,9 @@ import theo.tech.instanews.Entinties.Article
 import theo.tech.instanews.Network.ApiClient
 import theo.tech.instanews.R
 import theo.tech.instanews.app.Adapters.AllArticlesAdapter
+import theo.tech.instanews.app.AppControllers
+import theo.tech.instanews.app.Views.NewsDetails
+import java.io.Serializable
 
 /**
  * created by theop
@@ -65,7 +69,9 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
     }
 
     override fun onArticleClick(article: Article) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+ val intent=Intent(AppControllers.instance,NewsDetails::class.java)
+        intent.putExtra("extra_article",article as Serializable)
+        startActivity(intent)
     }
 
     override fun onCommentClick(article: Article) {
@@ -77,6 +83,6 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
     }
 
     override fun onLikeClick(article: Article) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }

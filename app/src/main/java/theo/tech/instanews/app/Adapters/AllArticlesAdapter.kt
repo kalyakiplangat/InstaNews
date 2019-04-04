@@ -36,16 +36,17 @@ class AllArticlesAdapter(var context: Context,private val articleList: ArrayList
         fun bind(context: Context,article: Article,listener: Listener,position: Int){
            itemView.tv_article_title.text=article.title
             itemView.tv_category.text=article.author
-            itemView.tv_source.text=article.source.name
+            itemView.tv_categ.text=article.content
+            itemView.tv_source.text= "${article.source.name} By:-"
 
             Glide.with(context)
                 .load(article.urlToImage)
                 .into(itemView.img_thumbnail)
 
             itemView.setOnClickListener { listener.onArticleClick(article) }
-            itemView.setOnClickListener { listener.onCommentClick(article) }
-            itemView.setOnClickListener { listener.onFavoriteClick(article) }
-            itemView.setOnClickListener { listener.onLikeClick(article) }
+            itemView.commentsWrapper.setOnClickListener { listener.onCommentClick(article) }
+            itemView.shareWrapper.setOnClickListener { listener.onFavoriteClick(article) }
+            itemView.likesWrapper.setOnClickListener { listener.onLikeClick(article) }
         }
     }
 }
