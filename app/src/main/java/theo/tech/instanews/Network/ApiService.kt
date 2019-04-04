@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
 import theo.tech.instanews.Entinties.Responses.BaseResponse
+import theo.tech.instanews.Entinties.Responses.SourceResponse
 
 /**
  * created by theop
@@ -16,8 +17,8 @@ interface ApiService {
         @Query("q")q:String
     ):Observable<BaseResponse>
 
-    @GET("")
+    @GET("sources")
     fun getSourceTechCategory(
         @Query("category")category:String
-    ):Observable<BaseResponse>
+    ):Observable<SourceResponse>
 }

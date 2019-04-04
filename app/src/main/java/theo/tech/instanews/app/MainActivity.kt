@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setupViewPager(viewpager: ViewPager) {
         val adapter=ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(HomeFragment(),"Articles")
-        adapter.addFragment(TechFragment(),"Technology")
+        adapter.addFragment(TechFragment(),"Sources")
         viewPager!!.adapter=adapter
     }
 
