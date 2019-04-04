@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,7 @@ class TechFragment:Fragment(),SourcesAdapter.Listener {
     val client by lazy {
         ApiClient.create()
     }
+    private var progressBar: ProgressBar? = null
     private lateinit var rv_content_list: RecyclerView
     lateinit var compositeDisposable: CompositeDisposable
     private lateinit var sourcesLists:ArrayList<Category>
@@ -36,6 +38,7 @@ class TechFragment:Fragment(),SourcesAdapter.Listener {
        val rootView:View=inflater.inflate(R.layout.tech_main_layout,container,false)
        compositeDisposable= CompositeDisposable()
         rv_content_list=rootView.findViewById(R.id.rv_content_list)
+        progressBar = rootView.findViewById(R.id.progressBar)
         initViews()
         fetchSources()
 
@@ -50,6 +53,7 @@ class TechFragment:Fragment(),SourcesAdapter.Listener {
     }
 /*fetch all sources for category tech related*/
     private fun fetchSources() {
+    progressBar?.setVisibility(View.VISIBLE)
     compositeDisposable.add(client.getSourceTechCategory(
         "technology"
     )
@@ -60,12 +64,14 @@ class TechFragment:Fragment(),SourcesAdapter.Listener {
     }
 
     private fun handleResponce(sources: List<Category>) {
+        progressBar?.setVisibility(View.GONE)
         sourcesLists= ArrayList(sources)
         sourcesAdapter= SourcesAdapter(this.context!!,sourcesLists,this)
         rv_content_list.adapter=sourcesAdapter
     }
 
     private fun handleError(e:Throwable){
+        progressBar?.setVisibility(View.GONE)
         e.printStackTrace()
     }
 

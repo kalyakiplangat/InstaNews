@@ -3,6 +3,7 @@ package theo.tech.instanews.app.Fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -30,6 +31,7 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
     val client by lazy {
         ApiClient.create()
     }
+    private var progressBar: ProgressBar? = null
     private lateinit var rv_content_list: RecyclerView
     lateinit var compositeDisposable: CompositeDisposable
     private lateinit var articleList:ArrayList<Article>
@@ -38,6 +40,7 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
         val rootView:View=inflater.inflate(R.layout.content_main,container,false)
         compositeDisposable= CompositeDisposable()
         rv_content_list=rootView.findViewById(R.id.rv_content_list)
+        progressBar = rootView.findViewById(R.id.progressBar)
         initViews()
         setHasOptionsMenu(true)
         fetchArticles()
@@ -45,6 +48,7 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
     }
 
     private fun fetchArticles() {
+        progressBar?.setVisibility(View.VISIBLE)
         compositeDisposable.add(client.getAllArticles(
             "technology"
         )
@@ -55,12 +59,14 @@ class HomeFragment:Fragment(),AllArticlesAdapter.Listener {
     }
 
     private fun handleResponse(articles: List<Article>) {
+        progressBar?.setVisibility(View.GONE)
         articleList= ArrayList(articles)
         articleAdapter=AllArticlesAdapter(this.context!!,articleList,this)
         rv_content_list.adapter=articleAdapter
     }
 
     private fun handleError(e:Throwable){
+        progressBar?.setVisibility(View.GONE)
         e.printStackTrace()
     }
 
