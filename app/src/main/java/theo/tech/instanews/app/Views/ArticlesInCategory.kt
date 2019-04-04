@@ -1,13 +1,10 @@
-package theo.tech.instanews.app.Fragments
+package theo.tech.instanews.app.Views
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,11 +14,8 @@ import theo.tech.instanews.Entinties.Article
 import theo.tech.instanews.Entinties.Category
 import theo.tech.instanews.Network.ApiClient
 import theo.tech.instanews.R
-import theo.tech.instanews.Utils.AppUtil
 import theo.tech.instanews.app.Adapters.AllArticlesAdapter
 import theo.tech.instanews.app.AppControllers
-import theo.tech.instanews.app.MainActivity
-import theo.tech.instanews.app.Views.NewsDetails
 import java.io.Serializable
 
 /**
@@ -85,14 +79,21 @@ class ArticlesInCategory:AppCompatActivity(),AllArticlesAdapter.Listener {
     }
 
     override fun onCommentClick(article: Article) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
     }
 
     override fun onFavoriteClick(article: Article) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
     }
 
     override fun onLikeClick(article: Article) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?)=when(item?.itemId) {
+        android.R.id.home->{
+            onBackPressed()
+            true
+        }else->false
     }
 }

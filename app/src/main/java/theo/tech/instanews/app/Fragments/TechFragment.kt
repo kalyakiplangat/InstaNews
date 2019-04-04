@@ -11,13 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import theo.tech.instanews.Entinties.Article
 import theo.tech.instanews.Entinties.Category
 import theo.tech.instanews.Network.ApiClient
 import theo.tech.instanews.R
-import theo.tech.instanews.app.Adapters.AllArticlesAdapter
 import theo.tech.instanews.app.Adapters.SourcesAdapter
 import theo.tech.instanews.app.AppControllers
+import theo.tech.instanews.app.Views.ArticlesInCategory
 import java.io.Serializable
 
 /**
@@ -71,7 +70,7 @@ class TechFragment:Fragment(),SourcesAdapter.Listener {
     }
 
     override fun onSourceClick(category: Category) {
-       val intent=Intent(AppControllers.instance,ArticlesInCategory::class.java)
+       val intent=Intent(AppControllers.instance, ArticlesInCategory::class.java)
         intent.putExtra("extra_source",category as Serializable)
         startActivity(intent)
     }

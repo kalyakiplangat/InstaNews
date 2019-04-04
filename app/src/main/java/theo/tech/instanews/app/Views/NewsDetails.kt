@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.*
@@ -84,4 +85,10 @@ class NewsDetails:AppCompatActivity() {
     }
 
     private inner class MyWebChromeClient(internal var context: Context) : WebChromeClient()
+    override fun onOptionsItemSelected(item: MenuItem?)=when(item?.itemId) {
+        android.R.id.home->{
+            onBackPressed()
+            true
+        }else->false
+    }
 }

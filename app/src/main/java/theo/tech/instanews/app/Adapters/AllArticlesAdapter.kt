@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.technews_row.view.*
 import theo.tech.instanews.Entinties.Article
 import theo.tech.instanews.R
+import java.time.format.DateTimeFormatter
 
 /**
  * created by theop
@@ -38,7 +39,12 @@ class AllArticlesAdapter(var context: Context,private val articleList: ArrayList
             itemView.tv_category.text=article.author
             itemView.tv_categ.text=article.content
             itemView.tv_source.text= "${article.source.name} By:-"
-
+//            val dateFormatTest=article.publishedAt
+//            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+//            val formatted = dateFormatTest.format(formatter)
+//            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+//            val formatted = dateFormatTest.format(formatter)
+            itemView.tv_dateadded.text="Published At: ${article.publishedAt}"
             Glide.with(context)
                 .load(article.urlToImage)
                 .into(itemView.img_thumbnail)

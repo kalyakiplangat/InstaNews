@@ -74,12 +74,24 @@
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
 
+        <TextView
+                android:id="@+id/tv_dateadded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_category"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/tv_ta"
+                android:layout_marginLeft="@dimen/md_keylines"
+                android:layout_marginRight="@dimen/md_keylines"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/article_subheading"
+                tools:text="Date" />
 
         <TextView
                 android:id="@+id/tv_categ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_category"
+                android:layout_below="@+id/tv_dateadded"
                 android:layout_marginBottom="10dp"
                 android:layout_toEndOf="@+id/tv_ta"
                 android:layout_marginLeft="@dimen/md_keylines"
