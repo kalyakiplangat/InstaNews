@@ -36,9 +36,9 @@ class AllArticlesAdapter(var context: Context,private val articleList: ArrayList
     class ViewHolder(view: View):RecyclerView.ViewHolder(view){
         fun bind(context: Context,article: Article,listener: Listener,position: Int){
            itemView.tv_article_title.text=article.title
-            itemView.tv_category.text=article.author
+            itemView.tv_category.text="By: ${article.author}"
             itemView.tv_categ.text=article.content
-            itemView.tv_source.text= "${article.source.name} By:-"
+            itemView.tv_source.text= "Source: ${article.source.name}"
 //            val dateFormatTest=article.publishedAt
 //            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
 //            val formatted = dateFormatTest.format(formatter)
