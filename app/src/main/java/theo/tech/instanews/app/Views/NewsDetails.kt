@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.*
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import theo.tech.instanews.Entinties.Article
 import theo.tech.instanews.R
@@ -19,11 +20,13 @@ import theo.tech.instanews.R
 class NewsDetails:AppCompatActivity() {
     private var webView: WebView? = null
     private var m_downX: Float = 0.toFloat()
+    private var progressBar: ProgressBar? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_details)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         webView= findViewById(R.id.wv_news_details)
+        progressBar = findViewById(R.id.progressBar)
         val article = intent?.extras?.get("extra_article")as? Article
         initWebView()
         webView?.loadUrl(article?.url)
@@ -32,28 +35,29 @@ class NewsDetails:AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility", "SetJavaScriptEnabled")
     private fun initWebView()
     {
-        webView!!.webChromeClient = MyWebChromeClient(this)
-        webView!!.webViewClient = object : WebViewClient() {
-//            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap) {
-//                super.onPageStarted(view, url, favicon)
-//
-//            }
+        webView?.webChromeClient = MyWebChromeClient(this)
+        webView?.webViewClient = object : WebViewClient() {
+            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                progressBar?.setVisibility(View.VISIBLE)
+                invalidateOptionsMenu()
+            }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 webView!!.loadUrl(url)
                 return true
             }
 
-//            override fun onPageFinished(view: WebView, url: String) {
-//                super.onPageFinished(view, url)
-//    //                progressBar.setVisibility(View.GONE)
-//                invalidateOptionsMenu()
-//            }
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                    progressBar?.setVisibility(View.GONE)
+                invalidateOptionsMenu()
+            }
 
             override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
                 super.onReceivedError(view, request, error)
-    //                progressBar.setVisibility(View.GONE)
-//                invalidateOptionsMenu()
+                    progressBar?.setVisibility(View.GONE)
+                invalidateOptionsMenu()
             }
         }
         webView!!.clearCache(true)
