@@ -32,8 +32,8 @@ class SourcesAdapter(var context: Context,private val sourceList: ArrayList<Cate
     }
     class ViewHolder(view: View):RecyclerView.ViewHolder(view){
         fun bind(context: Context,category: Category,listener: Listener,position: Int){
-            itemView.tv_name.text=category.name
-            itemView.tv_category.text=category.category
+            itemView.tv_name.text= "Source: ${category.name}"
+            itemView.tv_category.text="Category: ${category.category}"
             itemView.tv_desc.text=category.description
             itemView.setOnClickListener { listener.onSourceClick(category) }
         }
