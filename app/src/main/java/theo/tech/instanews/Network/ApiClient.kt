@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit
 /**
  * created by theop
  * on 4/3/2019 at 6:02 PM
+ * client side
  */
 class ApiClient {
     companion object {
